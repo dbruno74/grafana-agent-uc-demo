@@ -1,0 +1,40 @@
+server:
+  log_level: debug
+
+metrics:
+  global:
+    scrape_interval: 60s
+    remote_write:
+    - url: http://10.167.115.100:80/cos-prometheus-0/api/v1/write
+  configs:
+  - name: default
+    scrape_configs:
+    - job_name: uc_metrics
+      static_configs:
+        - targets: [localhost:12345]
+
+integrations:
+  node_exporter:
+    enabled: true
+    # disable unused collectors
+    disable_collectors:
+      - ipvs #high cardinality on kubelet
+      - btrfs
+      - infiniband
+      - xfs
+      - zfs
+    # exclude dynamic interfaces
+    netclass_ignored_devices: "^(veth.*|cali.*|[a-f0-9]{15})$"
+    netdev_device_exclude: "^(veth.*|cali.*|[a-f0-9]{15})$"
+    # disable tmpfs
+    filesystem_fs_types_exclude: "^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|tmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$"
+    # drop extensive scrape statistics
+    relabel_configs:
+    - replacement: 'uc-metrics'
+      target_label: instance
+    metric_relabel_configs:
+    - action: drop
+      regex: node_scrape_collector_.+
+      source_labels:
+      - __name__
+    - action: keep
