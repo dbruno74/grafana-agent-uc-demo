@@ -3,7 +3,7 @@ server:
 
 metrics:
   global:
-    scrape_interval: 60s
+    scrape_interval: 5s
     remote_write:
     - url: http://10.167.115.100:80/cos-prometheus-0/api/v1/write
   configs:
