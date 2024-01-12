@@ -323,26 +323,16 @@
             "uid": "P092BA37485E1ADAE"
           },
           "editorMode": "builder",
-          "expr": "node_procs_running",
-          "legendFormat": "running",
+          "exemplar": false,
+          "expr": "node_cpu_seconds_total",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "{{mode}}",
           "range": true,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P092BA37485E1ADAE"
-          },
-          "editorMode": "builder",
-          "expr": "node_procs_blocked",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "blocked",
-          "range": true,
-          "refId": "B"
         }
       ],
-      "title": "Processes running/blocked",
+      "title": "CPU",
       "type": "timeseries"
     },
     {
@@ -517,6 +507,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:272",
           "decimals": 0,
           "format": "none",
           "label": "Up",
@@ -525,6 +516,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:273",
           "format": "short",
           "logBase": 1,
           "show": false
@@ -4091,6 +4083,6 @@
   "timezone": "",
   "title": "DPP Operator Overview",
   "uid": "5f5f804ea96e0a36",
-  "version": 3,
+  "version": 7,
   "weekStart": ""
 }
